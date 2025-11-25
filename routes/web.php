@@ -2,10 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 // Public routes
-Route::get('/', [ProductController::class, 'index'])->name('home');
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
+// Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+// Static pages
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
 
 // Customer routes
 Route::middleware(['auth'])->group(function () {

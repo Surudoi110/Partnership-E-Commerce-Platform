@@ -15,21 +15,21 @@
             <h1 class="text-2xl font-bold text-indigo-600">Partnership E-Commerce</h1>
             <ul class="flex space-x-6">
                 <li><a href="/" class="hover:text-indigo-500">Home</a></li>
-                <li><a href="/products" class="hover:text-indigo-500">Products</a></li>
-                <li><a href="/partners" class="hover:text-indigo-500">Partners</a></li>
+                <li><a href="/products.index" class="hover:text-indigo-500">Products</a></li>
                 <li><a href="/about" class="hover:text-indigo-500">About</a></li>
                 <li><a href="/contact" class="hover:text-indigo-500">Contact</a></li>
             </ul>
-            <div>
-                
-                <a href="/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Login</a>
-                <a href="/register" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
-            </div>
             <form method="GET" action="{{ route('products.index') }}">
                 <input type="text" name="search" placeholder="Search products..." 
                        value="{{ request('search') }}">
                 <button type="submit">Search</button>
             </form>
+            <div>
+                
+                <a href="/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Login</a>
+                <a href="/register" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
+            </div>
+            
         </div>
     </nav>
 
