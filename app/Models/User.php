@@ -12,6 +12,17 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'seller_id');
+    }
+    
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *

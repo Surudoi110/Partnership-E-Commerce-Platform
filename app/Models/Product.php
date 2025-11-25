@@ -7,16 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name',
+        'seller_id',
+        'title',
         'description',
         'price',
-        'image',
-        'partner_id',
+        'stock',
+        'category',
+        'condition',
+        'status'
     ];
 
-    // Relationship: one partner has many products
     public function partner()
     {
-        return $this->belongsTo(Partner::class);
+        return $this->belongsTo(User::class, 'seller_id');
+    }
+    
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }
