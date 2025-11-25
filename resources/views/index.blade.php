@@ -11,6 +11,8 @@
         <a href="/partners" class="ml-3 px-6 py-3 border border-white rounded-lg hover:bg-indigo-500">Become a Partner</a>
     </section>
 
+    
+
     <!-- Featured Products -->
     <section class="container mx-auto py-16 px-6">
         <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
@@ -41,6 +43,11 @@
             </div>
         </div>
     </section>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <!-- Call to Action -->
     <section class="bg-indigo-100 py-16 text-center">
