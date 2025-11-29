@@ -47,7 +47,7 @@ class ProductController extends Controller
         ]);
 
         $product = Product::create([
-            'seller_id'   => Auth::id(),
+            'user_id' => Auth::id(),
             'title'       => $request->title,
             'description' => $request->description,
             'price'       => $request->price,
@@ -71,17 +71,17 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product created.');
     }
 
-    // Seller: edit form
+    // edit form
     public function edit($id)
     {
-        $product = Product::where('seller_id', Auth::id())->with('images')->findOrFail($id);
+        $product = Product::where('user_id', Auth::id())->with('images')->findOrFail($id);
         return view('products.edit', compact('product'));
     }
 
-    // Seller: update product
+    // update product
     public function update(Request $request, $id)
     {
-        $product = Product::where('seller_id', Auth::id())->findOrFail($id);
+        $product = Product::where('user_id', Auth::id())->findOrFail($id);
 
         $request->validate([
             'title'       => 'required',
@@ -119,10 +119,10 @@ class ProductController extends Controller
         return redirect()->route('products.show', $id)->with('success', 'Product updated.');
     }
 
-    // Seller: delete product
+    // delete product
     public function delete($id)
     {
-        $product = Product::where('seller_id', Auth::id())->with('images')->findOrFail($id);
+        $product = Product::where('user_id', Auth::id())->with('images')->findOrFail($id);
 
         foreach ($product->images as $img) {
             Storage::delete($img->image_path);
