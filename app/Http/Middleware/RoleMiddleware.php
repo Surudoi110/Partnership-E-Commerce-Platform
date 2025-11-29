@@ -15,15 +15,8 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        $user = auth()->user();
-
-        if (!$user) {
-            abort(403, 'Unauthorized.');
-        }
-
-        // Check if the user role is in allowed roles
-        if (!in_array($user->role, $roles)) {
-            abort(403, 'Insufficient permissions.');
+        if ($role === 'admin' && $request->user()->role !== 'admin') {
+            abort(403, 'You do not have permission');
         }
 
         return $next($request);

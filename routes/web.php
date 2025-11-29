@@ -23,15 +23,17 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Seller routes
-Route::middleware(['auth', 'role:seller'])->group(function () {
-    // product management
-    Route::get('/seller/products', [ProductController::class, 'index'])->name('seller.products');
-    Route::get('/seller/products/create', [ProductController::class, 'create'])->name('seller.products.create');
-    Route::post('/seller/products/store', [ProductController::class, 'store'])->name('seller.products.store');
-    Route::get('/seller/products/{id}/edit', [ProductController::class, 'edit'])->name('seller.products.edit');
-    Route::put('/seller/products/{id}', [ProductController::class, 'update'])->name('seller.products.update');
-    Route::delete('/seller/products/{id}', [ProductController::class, 'destroy'])->name('seller.products.destroy');
+Route::middleware(['auth'])->group(function () {
+
+    // Product management for any user
+    Route::get('/my/products', [ProductController::class, 'index'])->name('my.products');
+    Route::get('/my/products/create', [ProductController::class, 'create'])->name('my.products.create');
+    Route::post('/my/products/store', [ProductController::class, 'store'])->name('my.products.store');
+    Route::get('/my/products/{id}/edit', [ProductController::class, 'edit'])->name('my.products.edit');
+    Route::put('/my/products/{id}', [ProductController::class, 'update'])->name('my.products.update');
+    Route::delete('/my/products/{id}', [ProductController::class, 'destroy'])->name('my.products.destroy');
 });
+
 
 // Admin routes
 Route::middleware(['auth', 'role:admin'])->group(function () {

@@ -8,7 +8,7 @@
         <h2 class="text-4xl font-bold mb-4">Grow Together, Sell Together</h2>
         <p class="text-lg mb-6">A platform where businesses collaborate and reach more customers.</p>
         <a href="/products" class="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100">Explore Products</a>
-        <a href="/partners" class="ml-3 px-6 py-3 border border-white rounded-lg hover:bg-indigo-500">Become a Partner</a>
+        <!-- <a href="/partners" class="ml-3 px-6 py-3 border border-white rounded-lg hover:bg-indigo-500">Become a Partner</a> -->
     </section>
 
     
