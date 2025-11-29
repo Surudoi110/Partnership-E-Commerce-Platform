@@ -43,7 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::prefix('/register')->group(function(){
     Route::get('/signup', function(){
-
+        
     });
 
     Route::get('/login', function(){

@@ -74,12 +74,12 @@
                 </form>
 
                 <!-- Login / Signup -->
-                <a href="/login"
+                <a href="/register/login"
                     class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">
                     Login
                 </a>
 
-                <a href="/signup"
+                <a href="/register/signup"
                     class="px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">
                     Sign Up
                 </a>
@@ -123,12 +123,12 @@
 
             <!-- Login / Sign Up -->
             <div class="space-y-2 pt-2">
-                <a href="/login"
+                <a href="/register/login"
                     class="block w-full text-center py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
                     Login
                 </a>
 
-                <a href="/signup"
+                <a href="/register/signup"
                     class="block w-full text-center py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50">
                     Sign Up
                 </a>
