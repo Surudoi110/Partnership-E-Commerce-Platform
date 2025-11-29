@@ -15,7 +15,7 @@
             <h1 class="text-2xl font-bold text-indigo-600">Keandre's Marketplace</h1>
             <ul class="flex space-x-6">
                 <li><a href="/" class="hover:text-indigo-500">Home</a></li>
-                <li><a href="/products.index" class="hover:text-indigo-500">Products</a></li>
+                <li><a href="/products" class="hover:text-indigo-500">Products</a></li>
                 <li><a href="/about" class="hover:text-indigo-500">About</a></li>
                 <li><a href="/contact" class="hover:text-indigo-500">Contact</a></li>
             </ul>

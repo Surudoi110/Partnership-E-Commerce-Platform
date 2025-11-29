@@ -67,6 +67,7 @@ class ProductController extends Controller
 
             $product = Product::create([
                 'user_id'   => Auth::id(),
+                // 'user_id'    => 1, // TEMPORARY FIX FOR DEMO PURPOSES
                 'title'       => $request->title,
                 'description' => $request->description,
                 'price'       => $request->price,
