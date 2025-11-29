@@ -5,7 +5,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 // use App\Http\Controllers\UserController;   // uncomment when you add user routes
 // use App\Http\Controllers\AdminController;  // uncomment when you add admin routes
-use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,11 +69,6 @@ Route::middleware(['auth', 'role:admin'])
         // Example admin routes (uncomment when ready)
         // Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         // Route::resource('products', AdminProductController::class);
-Route::prefix('/register')->group(function(){
-    Route::get('/signup', function(){
-        
-    });
-});
     });
 
 
