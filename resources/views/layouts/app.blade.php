@@ -7,9 +7,8 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md">
+    <!-- OG Navbar -->
+    <!-- <nav class="bg-white shadow-md">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             
             <h1 class="text-2xl font-bold text-indigo-600">Keandre's Marketplace</h1>
@@ -30,6 +29,86 @@
                 <a href="/register/signup" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
             </div>
             
+        </div>
+    </nav> -->
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+
+            <!-- Left: Logo -->
+            <h1 class="text-2xl font-bold text-indigo-600">Keandre's Marketplace</h1>
+
+            <!-- Hamburger button (mobile only) -->
+            <button
+                class="lg:hidden text-3xl focus:outline-none"
+                onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+            >
+                ☰
+            </button>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-6">
+
+                <!-- Navigation links -->
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-indigo-500">Home</a></li>
+                    <li><a href="/products.index" class="hover:text-indigo-500">Products</a></li>
+                    <li><a href="/about" class="hover:text-indigo-500">About</a></li>
+                    <li><a href="/contact" class="hover:text-indigo-500">Contact</a></li>
+                </ul>
+
+                <!-- Search form -->
+                <form method="GET" action="{{ route('products.index') }}" class="flex items-center">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search products..."
+                        value="{{ request('search') }}"
+                        class="border rounded-lg px-2 py-1"
+                    >
+                    <button type="submit" class="ml-2 px-3 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
+                        Search
+                    </button>
+                </form>
+
+                <!-- Login/Signup -->
+                <div>
+                    <a href="/register/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Login</a>
+                    <a href="/register/signup" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="lg:hidden hidden px-6 pb-4 space-y-4">
+
+            <!-- Navigation links -->
+            <ul class="space-y-2">
+                <li><a href="/" class="block hover:text-indigo-500">Home</a></li>
+                <li><a href="/products.index" class="block hover:text-indigo-500">Products</a></li>
+                <li><a href="/about" class="block hover:text-indigo-500">About</a></li>
+                <li><a href="/contact" class="block hover:text-indigo-500">Contact</a></li>
+            </ul>
+
+            <!-- Search -->
+            <form method="GET" action="{{ route('products.index') }}" class="flex">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search products..."
+                    value="{{ request('search') }}"
+                    class="border rounded-lg px-2 py-1 w-full"
+                >
+                <button type="submit" class="ml-2 px-3 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
+                    Search
+                </button>
+            </form>
+
+            <!-- Login/Signup -->
+            <div class="pt-2 space-y-2">
+                <a href="/register/login" class="block w-full text-center py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">Login</a>
+                <a href="/register/signup" class="block w-full text-center py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50">Sign Up</a>
+            </div>
         </div>
     </nav>
 
