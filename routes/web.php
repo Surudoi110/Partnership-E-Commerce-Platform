@@ -37,3 +37,13 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // admin dashboard (idk what to add)
 });
+
+Route::prefix('/register')->group(function(){
+    Route::get('/signup', function(){
+
+    });
+
+    Route::get('/login', function(){
+        
+    });
+});
