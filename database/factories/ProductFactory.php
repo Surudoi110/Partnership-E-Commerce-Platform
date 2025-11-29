@@ -16,12 +16,19 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        // return [
+        //     'name' => ucfirst($this->faker->words(2, true)),
+        //     'description' => $this->faker->paragraph(),
+        //     'price' => $this->faker->randomFloat(2, 10, 300),
+        //     'image' => null,
+        //     'partner_id' => Partner::inRandomOrder()->first()->id,
+        // ];
         return [
-            'name' => ucfirst($this->faker->words(2, true)),
+            'user_id' => User::inRandomOrder()->first()->id, // belongs to a user
+            'title' => ucfirst($this->faker->words(2, true)),
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 10, 300),
-            'image' => null,
-            'partner_id' => Partner::inRandomOrder()->first()->id,
+            'stock' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
