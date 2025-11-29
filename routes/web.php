@@ -13,7 +13,7 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 
-// Customer routes
+// user customer routes
 Route::middleware(['auth'])->group(function () {
     // cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/remove/{itemId}', [CartController::class, 'remove'])->name('cart.remove');
 });
 
-// Seller routes
+// user seller routes
 Route::middleware(['auth'])->group(function () {
 
     // Product management for any user

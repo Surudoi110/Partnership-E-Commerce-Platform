@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
         foreach ($partners as $partner) {
             for ($i = 0; $i < 5; $i++) {
                 Product::create([
-                    'name' => $faker->productName(),
+                    'name' => $faker->words(2, true),
                     'description' => $faker->paragraph(),
                     'price' => $faker->randomFloat(2, 10, 300),
                     'image' => null,
