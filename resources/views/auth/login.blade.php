@@ -7,7 +7,7 @@
     <div class="form-container">
         <h2 class="text-center mb-4">Welcome Back</h2>
         
-        <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="/register/login">
             @csrf
             
             <!-- Email Field -->
@@ -49,9 +49,9 @@
                     </label>
                 </div>
                 <div>
-                    <a href="{{ route('password.request') }}" class="text-decoration-none">
-                        Forgot password?
-                    </a>
+                        <a href="/password/reset" class="text-decoration-none">
+                            Forgot password?
+                        </a>
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
             <!-- Link to Register -->
             <div class="text-center">
                 <p class="mb-0">Don't have an account? 
-                    <a href="{{ route('register') }}" class="text-decoration-none">Create one here</a>
+                    <a href="/register/signup" class="text-decoration-none">Create one here</a>
                 </p>
             </div>
         </form>

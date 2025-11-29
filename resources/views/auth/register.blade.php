@@ -7,7 +7,7 @@
     <div class="form-container">
         <h2 class="text-center mb-4">Create Account</h2>
         
-        <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="/register/signup">
             @csrf
             
             <!-- Name Field -->
@@ -74,7 +74,7 @@
             <!-- Link to Login -->
             <div class="text-center">
                 <p class="mb-0">Already have an account? 
-                    <a href="{{ route('login') }}" class="text-decoration-none">Sign in here</a>
+                    <a href="/register/login" class="text-decoration-none">Sign in here</a>
                 </p>
             </div>
         </form>
