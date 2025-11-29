@@ -7,130 +7,157 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    // Public: show all products
+    // PUBLIC — homepage product listing
     public function index()
     {
-        $products = Product::with('images')->latest()->get();
-        // return view('products.index', compact('products'));
+        $products = Product::with('images')->latest()->take(8)->get();
         return view('index', compact('products'));
-
     }
 
-    // Public: show product detail
-    public function show($id)
+    // PUBLIC — all products page
+    public function list()
     {
-        $product = Product::with('images')->findOrFail($id);
+        $products = Product::with('images')->latest()->paginate(15);
+        return view('products.list', compact('products'));
+    }
+
+    // PUBLIC — show product detail
+    public function show(Product $product)
+    {
+        $product->load('images');
         return view('products.show', compact('product'));
     }
 
-    // Seller: create form
+    // AUTH — my products dashboard
+    public function myProducts()
+    {
+        $products = Product::where('user_id', Auth::id())
+            ->with('images')
+            ->latest()
+            ->get();
+
+        return view('products.my', compact('products'));
+    }
+
+    // AUTH — create form
     public function create()
     {
         return view('products.create');
     }
 
-    // Seller: store product
+    // AUTH — store new product
     public function store(Request $request)
     {
         $request->validate([
             'title'       => 'required',
             'description' => 'required',
-            'price'       => 'required|numeric',
-            'quantity'    => 'required|integer',
+            'price'       => 'required|numeric|min:0',
+            'quantity'    => 'required|integer|min:1',
             'category'    => 'required',
             'condition'   => 'required',
             'location'    => 'required',
             'images.*'    => 'image|max:2048'
         ]);
 
-        $product = Product::create([
-            'user_id' => Auth::id(),
-            'title'       => $request->title,
-            'description' => $request->description,
-            'price'       => $request->price,
-            'quantity'    => $request->quantity,
-            'category'    => $request->category,
-            'condition'   => $request->condition,
-            'location'    => $request->location,
-            'status'      => 'active'
-        ]);
+        DB::transaction(function () use ($request) {
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $img) {
-                $path = $img->store('product_images');
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image_path' => $path
-                ]);
+            $product = Product::create([
+                'user_id'   => Auth::id(),
+                'title'       => $request->title,
+                'description' => $request->description,
+                'price'       => $request->price,
+                'quantity'    => $request->quantity,
+                'category'    => $request->category,
+                'condition'   => $request->condition,
+                'location'    => $request->location,
+                'status'      => 'active',
+            ]);
+
+            if ($request->hasFile('images')) {
+                foreach ($request->images as $image) {
+                    $path = $image->store('product_images', 'public');
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $path
+                    ]);
+                }
             }
-        }
+        });
 
-        return redirect()->route('products.index')->with('success', 'Product created.');
+        return redirect()->route('me.products.index')
+            ->with('success', 'Product created successfully.');
     }
 
-    // edit form
-    public function edit($id)
+    // AUTH — edit form
+    public function edit(Product $product)
     {
-        $product = Product::where('user_id', Auth::id())->with('images')->findOrFail($id);
+        // Ownership check
+        if ($product->user_id !== Auth::id()) abort(403);
+
+        $product->load('images');
         return view('products.edit', compact('product'));
     }
 
-    // update product
-    public function update(Request $request, $id)
+    // AUTH — update product
+    public function update(Request $request, Product $product)
     {
-        $product = Product::where('user_id', Auth::id())->findOrFail($id);
+        if ($product->user_id !== Auth::id()) abort(403);
 
         $request->validate([
             'title'       => 'required',
             'description' => 'required',
-            'price'       => 'required|numeric',
-            'quantity'    => 'required|integer',
+            'price'       => 'required|numeric|min:0',
+            'quantity'    => 'required|integer|min:1',
             'category'    => 'required',
             'condition'   => 'required',
             'location'    => 'required',
             'status'      => 'required',
+            'images.*'    => 'image|max:2048'
         ]);
 
-        $product->update($request->only(
-            'title',
-            'description',
-            'price',
-            'quantity',
-            'category',
-            'condition',
-            'location',
-            'status'
-        ));
+        DB::transaction(function () use ($request, $product) {
 
-        // Add new images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $img) {
-                $path = $img->store('product_images');
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image_path' => $path
-                ]);
+            $product->update($request->only([
+                'title', 'description', 'price', 'quantity',
+                'category', 'condition', 'location', 'status'
+            ]));
+
+            if ($request->hasFile('images')) {
+                foreach ($request->images as $image) {
+                    $path = $image->store('product_images', 'public');
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $path
+                    ]);
+                }
             }
-        }
+        });
 
-        return redirect()->route('products.show', $id)->with('success', 'Product updated.');
+        return redirect()->route('me.products.index')
+            ->with('success', 'Product updated successfully.');
     }
 
-    // delete product
-    public function delete($id)
+    // AUTH — delete product
+    public function destroy(Product $product)
     {
-        $product = Product::where('user_id', Auth::id())->with('images')->findOrFail($id);
+        if ($product->user_id !== Auth::id()) abort(403);
 
-        foreach ($product->images as $img) {
-            Storage::delete($img->image_path);
-            $img->delete();
-        }
+        DB::transaction(function () use ($product) {
 
-        $product->delete();
+            // delete images from storage
+            foreach ($product->images as $img) {
+                Storage::disk('public')->delete($img->image_path);
+                $img->delete();
+            }
 
-        return redirect()->route('products.index')->with('success', 'Product deleted.');
+            $product->delete();
+        });
+
+        return redirect()->route('me.products.index')
+            ->with('success', 'Product deleted.');
     }
 }

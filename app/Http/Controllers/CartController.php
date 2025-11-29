@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    //
+    // view cart
     public function index()
     {
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
@@ -20,51 +19,49 @@ class CartController extends Controller
         return view('cart.index', compact('cart', 'items'));
     }
 
-    // Add product to cart
-    public function add(Request $request, $productId)
+    // add product to cart
+    public function add(Request $request, Product $product)
     {
-        $product = Product::findOrFail($productId);
-
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
-        $existingItem = CartItem::where('cart_id', $cart->id)
-                                ->where('product_id', $productId)
-                                ->first();
+        $item = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $product->id)
+            ->first();
 
-        if ($existingItem) {
-            $existingItem->quantity += 1;
-            $existingItem->save();
+        if ($item) {
+            $item->increment('quantity');
         } else {
             CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $productId,
-                'quantity' => 1
+                'cart_id'    => $cart->id,
+                'product_id' => $product->id,
+                'quantity'   => 1,
             ]);
         }
 
         return back()->with('success', 'Added to cart!');
     }
 
-    // Update quantity
-    public function update(Request $request, $itemId)
+    // update quantity
+    public function update(Request $request, CartItem $item)
     {
-        $request->validate(['quantity' => 'required|integer|min:1']);
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
 
-        $item = CartItem::whereHas('cart', function ($q) {
-            $q->where('user_id', Auth::id());
-        })->findOrFail($itemId);
+        // ensure ownership
+        if ($item->cart->user_id !== Auth::id()) abort(403);
 
-        $item->update(['quantity' => $request->quantity]);
+        $item->update([
+            'quantity' => $request->quantity
+        ]);
 
         return back()->with('success', 'Cart updated!');
     }
 
-    // Remove an item
-    public function remove($itemId)
+    // remove item
+    public function remove(CartItem $item)
     {
-        $item = CartItem::whereHas('cart', function ($q) {
-            $q->where('user_id', Auth::id());
-        })->findOrFail($itemId);
+        if ($item->cart->user_id !== Auth::id()) abort(403);
 
         $item->delete();
 

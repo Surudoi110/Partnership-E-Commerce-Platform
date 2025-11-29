@@ -15,34 +15,39 @@
 
     <!-- Featured Products -->
     <section class="container mx-auto py-16 px-6">
-        <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Product Card -->
-            <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                <img src="https://via.placeholder.com/150" alt="Product 1" class="mx-auto mb-4 rounded-md">
-                <h4 class="text-xl font-semibold mb-2">Organic Coffee Beans</h4>
-                <p class="text-gray-600 mb-3">Fair-trade coffee from local farmers.</p>
-                <p class="text-indigo-600 font-bold mb-4">$12.99</p>
-                <a href="/products" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">Buy Now</a>
-            </div>
+    <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
 
+    <div class="grid md:grid-cols-3 gap-8">
+        @foreach ($products as $product)
             <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                <img src="https://via.placeholder.com/150" alt="Product 2" class="mx-auto mb-4 rounded-md">
-                <h4 class="text-xl font-semibold mb-2">Handmade Bags</h4>
-                <p class="text-gray-600 mb-3">Eco-friendly bags crafted by local artisans.</p>
-                <p class="text-indigo-600 font-bold mb-4">$24.50</p>
-                <a href="/products" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">Buy Now</a>
-            </div>
+                @if ($product->images->count() > 0)
+                    <img src="{{ asset('images/organicCoffeeBeans.jpg') }}"
+                         alt="Organic Coffee Beans"
+                         class="mx-auto mb-4 rounded-md">
+                @else
+                    <img src="https://via.placeholder.com/150"
+                         class="mx-auto mb-4 rounded-md">
+                @endif
 
-            <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                <img src="https://via.placeholder.com/150" alt="Product 3" class="mx-auto mb-4 rounded-md">
-                <h4 class="text-xl font-semibold mb-2">Herbal Soap</h4>
-                <p class="text-gray-600 mb-3">Natural and chemical-free handmade soaps.</p>
-                <p class="text-indigo-600 font-bold mb-4">$8.00</p>
-                <a href="/products" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">Buy Now</a>
+                {{-- Title --}}
+                <h4 class="text-xl font-semibold mb-2">{{ $product->title }}</h4>
+
+                {{-- Description --}}
+                <p class="text-gray-600 mb-3">{{ Str::limit($product->description, 70) }}</p>
+
+                {{-- Price --}}
+                <p class="text-indigo-600 font-bold mb-4">${{ number_format($product->price, 2) }}</p>
+
+                {{-- View Product --}}
+                <a href="{{ route('products.show', $product->id) }}"
+                   class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
+                    View Product
+                </a>
             </div>
-        </div>
-    </section>
+        @endforeach
+    </div>
+</section>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -51,7 +56,7 @@
 
     <!-- Call to Action -->
     <section class="bg-indigo-100 py-16 text-center">
-        <h3 class="text-3xl font-bold mb-4">Partner With Us</h3>
+        <h3 class="text-3xl font-bold mb-4">Contact Us</h3>
         <p class="text-lg mb-6">Are you a local business or NGO looking to expand your reach? Join our partnership program and grow together.</p>
         <a href="/partners" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500">Become a Partner</a>
     </section>
