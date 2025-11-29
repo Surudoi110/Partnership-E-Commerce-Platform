@@ -26,8 +26,8 @@
             </form>
             <div>
                 
-                <a href="/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Login</a>
-                <a href="/register" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
+                <a href="/register/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Login</a>
+                <a href="/register/signup" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a>
             </div>
             
         </div>
