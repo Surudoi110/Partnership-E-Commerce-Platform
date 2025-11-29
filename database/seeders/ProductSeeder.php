@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
-use App\Models\Partner;
 use Faker\Factory as Faker;
+use App\Models\User;
+
 
 class ProductSeeder extends Seeder
 {
@@ -13,16 +14,16 @@ class ProductSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $partners = Partner::all(); // assumes partner table exists
+        $users = User::all(); // sellers & buyers are same "user"
 
-        foreach ($partners as $partner) {
+        foreach ($users as $user) {
             for ($i = 0; $i < 5; $i++) {
                 Product::create([
-                    'name' => $faker->words(2, true),
+                    'user_id' => $user->id,
+                    'title' => ucfirst($faker->words(2, true)),
                     'description' => $faker->paragraph(),
                     'price' => $faker->randomFloat(2, 10, 300),
-                    'image' => null,
-                    'partner_id' => $partner->id,
+                    'stock' => $faker->numberBetween(1, 10),
                 ]);
             }
         }
