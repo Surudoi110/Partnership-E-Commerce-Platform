@@ -47,12 +47,12 @@ Route::prefix('me')->group(function () {
 //     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove'); // $item = cart item id or model
 
 //     // "My products" (the authenticated user's product management)
-//     Route::get('/me/products', [ProductController::class, 'myProducts'])->name('me.products.index');
-//     Route::get('/me/products/create', [ProductController::class, 'create'])->name('me.products.create');
-//     Route::post('/me/products', [ProductController::class, 'store'])->name('me.products.store');
-//     Route::get('/me/products/{product}/edit', [ProductController::class, 'edit'])->name('me.products.edit');
-//     Route::put('/me/products/{product}', [ProductController::class, 'update'])->name('me.products.update');
-//     Route::delete('/me/products/{product}', [ProductController::class, 'destroy'])->name('me.products.destroy');
+    Route::get('/me/products', [ProductController::class, 'myProducts'])->name('me.products.index');
+    Route::get('/me/products/create', [ProductController::class, 'create'])->name('me.products.create');
+    Route::post('/me/products', [ProductController::class, 'store'])->name('me.products.store');
+    Route::get('/me/products/{product}/edit', [ProductController::class, 'edit'])->name('me.products.edit');
+    Route::put('/me/products/{product}', [ProductController::class, 'update'])->name('me.products.update');
+    Route::delete('/me/products/{product}', [ProductController::class, 'destroy'])->name('me.products.destroy');
 
 // });
 

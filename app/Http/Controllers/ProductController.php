@@ -66,8 +66,8 @@ class ProductController extends Controller
         DB::transaction(function () use ($request) {
 
             $product = Product::create([
-                'user_id'   => Auth::id(),
-                // 'user_id'    => 1, // TEMPORARY FIX FOR DEMO PURPOSES
+                // 'user_id'   => Auth::id(),
+                'user_id'    => 1, // TEMPORARY FIX FOR DEMO PURPOSES
                 'title'       => $request->title,
                 'description' => $request->description,
                 'price'       => $request->price,
