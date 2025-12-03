@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Auth\LoginController;
 // use App\Http\Controllers\UserController;   // uncomment when you add user routes
 // use App\Http\Controllers\AdminController;  // uncomment when you add admin routes
 
@@ -80,8 +81,8 @@ Route::middleware(['auth', 'role:admin'])
 | Example manual auth routes (uncomment and point to your controllers if needed):
 |--------------------------------------------------------------------------
 */
-// Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
-// Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-// Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
-// Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
+Route::get('/register/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/register/login', [LoginController::class, 'login']);
+Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('/register/signup', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register/signup', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
