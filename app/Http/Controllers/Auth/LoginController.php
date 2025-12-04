@@ -53,6 +53,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'You have been logged out successfully.');
+        return redirect('products.index')->with('success', 'You have been logged out successfully.');
     }
 }

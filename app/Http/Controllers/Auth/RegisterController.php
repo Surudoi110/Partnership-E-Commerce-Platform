@@ -48,6 +48,6 @@ class RegisterController extends Controller
         // Log the user in
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Registration successful! Welcome to our application.');
+        return redirect('/register/login')->with('success', 'Registration successful! Welcome to our application.');
     }
 }
