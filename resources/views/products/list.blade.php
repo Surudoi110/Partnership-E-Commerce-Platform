@@ -11,7 +11,11 @@
            class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition">
             + Create Product
         </a>
+        
     </div>
+
+    
+    
 
     <div class="grid md:grid-cols-3 gap-8">
 
@@ -21,8 +25,26 @@
                  class="mx-auto mb-3 h-40 object-cover rounded">
             <h2 class="text-lg font-semibold mb-2">{{ $product->title }}</h2>
             <p class="text-indigo-600 font-bold">${{ $product->price }}</p>
+        
+            <div class="mt-3 flex justify-center gap-3">
+                <a href="{{ route('me.products.edit', $product->id) }}"
+                   class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
+                    Edit
+                </a>
+
+                <form action="{{ route('me.products.destroy', $product->id) }}" method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    @csrf
+                    @method('DELETE')
+                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
         @endforeach
+
+
 
     </div>
 

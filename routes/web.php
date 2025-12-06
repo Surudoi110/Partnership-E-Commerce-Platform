@@ -41,11 +41,11 @@ Route::prefix('me')->group(function () {
 */
 // Route::middleware(['auth'])->group(function () {
 
-//     // Cart
-//     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-//     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');         // accepts Product $product
-//     Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');   // $item = cart item id or model
-//     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove'); // $item = cart item id or model
+    // Cart
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');         // accepts Product $product
+    Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');   // $item = cart item id or model
+    Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove'); // $item = cart item id or model
 
 //     // "My products" (the authenticated user's product management)
     Route::get('/me/products', [ProductController::class, 'myProducts'])->name('me.products.index');

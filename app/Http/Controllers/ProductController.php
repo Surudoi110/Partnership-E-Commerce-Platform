@@ -38,9 +38,10 @@ class ProductController extends Controller
         $products = Product::where('user_id', Auth::id())
             ->with('images')
             ->latest()
-            ->get();
+            // ->get();
+            ->paginate(10);
 
-        return view('products.my', compact('products'));
+        return view('products.list', compact('products'));
     }
 
     // AUTH — create form
@@ -66,8 +67,8 @@ class ProductController extends Controller
         DB::transaction(function () use ($request) {
 
             $product = Product::create([
-                // 'user_id'   => Auth::id(),
-                'user_id'    => 1, // TEMPORARY FIX FOR DEMO PURPOSES
+                'user_id'   => Auth::id(),
+                // 'user_id'    => 1, // TEMPORARY FIX FOR DEMO PURPOSES
                 'title'       => $request->title,
                 'description' => $request->description,
                 'price'       => $request->price,
@@ -116,7 +117,6 @@ class ProductController extends Controller
             'category'    => 'required',
             'condition'   => 'required',
             'location'    => 'required',
-            'status'      => 'required',
             'images.*'    => 'image|max:2048'
         ]);
 
