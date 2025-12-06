@@ -38,7 +38,7 @@ class CartController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Added to cart!');
+        return redirect()->route('cart.index')->with('success', 'Added to cart!');
     }
 
     // update quantity

@@ -5,7 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\LoginController;
 // use App\Http\Controllers\UserController;   // uncomment when you add user routes
-// use App\Http\Controllers\AdminController;  // uncomment when you add admin routes
+use App\Http\Controllers\AdminController;  // uncomment when you add admin routes
+// use App\Http\Controllers\auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,13 +40,14 @@ Route::prefix('me')->group(function () {
 | Authenticated user routes (all users can sell)
 |--------------------------------------------------------------------------
 */
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');         // accepts Product $product
-    Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');   // $item = cart item id or model
-    Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove'); // $item = cart item id or model
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
+
 
 //     // "My products" (the authenticated user's product management)
     Route::get('/me/products', [ProductController::class, 'myProducts'])->name('me.products.index');
@@ -55,7 +57,7 @@ Route::prefix('me')->group(function () {
     Route::put('/me/products/{product}', [ProductController::class, 'update'])->name('me.products.update');
     Route::delete('/me/products/{product}', [ProductController::class, 'destroy'])->name('me.products.destroy');
 
-// });
+});
 
 
 /*
@@ -63,14 +65,23 @@ Route::prefix('me')->group(function () {
 | Admin routes (optional)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        // Example admin routes (uncomment when ready)
-        // Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-        // Route::resource('products', AdminProductController::class);
-    });
+// Route::middleware(['auth', 'role:admin'])
+//     ->prefix('admin')
+//     ->name('admin.')
+//     ->group(function () {
+//         // Example admin routes (uncomment when ready)
+//         // Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+//         // Route::resource('products', AdminProductController::class);
+//     });
+
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::resource('/admin/products', AdminProductController::class);
+    Route::resource('/admin/users', AdminUserController::class);
+    Route::resource('/admin/orders', AdminOrderController::class);
+});
 
 
 /*

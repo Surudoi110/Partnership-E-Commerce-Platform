@@ -10,29 +10,65 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-md">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+
+        <!-- Brand -->
+        <h1 class="text-2xl font-bold text-indigo-600">Keandre's Marketplace</h1>
+
+        <!-- Menu -->
+        <ul class="flex space-x-6">
             
-            <h1 class="text-2xl font-bold text-indigo-600">Keandre's Marketplace</h1>
-            <ul class="flex space-x-6">
-                <li><a href="/" class="hover:text-indigo-500">Home</a></li>
-                <li><a href="/products" class="hover:text-indigo-500">Products</a></li>
-                <li><a href="/about" class="hover:text-indigo-500">About</a></li>
-                <li><a href="/contact" class="hover:text-indigo-500">Contact</a></li>
-            </ul>
-            <form method="GET" action="{{ route('products.index') }}">
-                <input type="text" name="search" placeholder="Search products..." 
-                       value="{{ request('search') }}">
-                <button type="submit">Search</button>
-            </form>
-            <div>
-                
-                <a href="/register/login" class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Logout</a>
-                <!-- <a href="/register/signup" class="ml-2 px-4 py-2 border border-indigo-600 rounded-lg text-indigo-600 hover:bg-indigo-50">Sign Up</a> -->
-            </div>
-            
+            <li><a href="/" class="hover:text-indigo-500">Home</a></li>
+            <li><a href="/products" class="hover:text-indigo-500">Products</a></li>
+            <li><a href="/about" class="hover:text-indigo-500">About</a></li>
+            <li><a href="/contact" class="hover:text-indigo-500">Contact</a></li>
+
+            @auth
+                @if(auth()->user()->role === 'admin')
+                    <li>
+                        <a href="/admin/dashboard" class="hover:text-indigo-500 font-semibold text-red-600">
+                            Admin Dashboard
+                        </a>
+                    </li>
+                @endif
+            @endauth
+
+            <!-- Cart -->
+            <li>
+                <a href="{{ route('cart.index') }}" class="relative hover:text-indigo-500 flex items-center">
+                    🛒 Cart
+                    @if(session('cart_count') && session('cart_count') > 0)
+                        <span class="absolute -top-2 -right-3 bg-red-600 text-white text-xs rounded-full px-1">
+                            {{ session('cart_count') }}
+                        </span>
+                    @endif
+                </a>
+            </li>
+        </ul>
+
+        <!-- Search -->
+        <form method="GET" action="{{ route('products.index') }}" class="flex space-x-2">
+            <input type="text" 
+                   name="search" 
+                   placeholder="Search products..." 
+                   value="{{ request('search') }}"
+                   class="border rounded-md px-2 py-1">
+            <button type="submit" 
+                    class="px-4 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">
+                Search
+            </button>
+        </form>
+
+        <!-- Auth -->
+        <div>
+            <a href="/register/login" 
+               class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">Logout</a>
         </div>
-    </nav>
+
+    </div>
+</nav>
+
 
     <!-- Main Content -->
     <main class="min-h-screen">

@@ -43,6 +43,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user', // enforce normal role on register
         ]);
 
         // Log the user in
