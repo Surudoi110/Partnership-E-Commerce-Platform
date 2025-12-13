@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel')</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -12,11 +15,15 @@
         <ul class="flex space-x-6">
             <li><a href="{{ route('admin.dashboard') }}" class="hover:text-indigo-400">Dashboard</a></li>
             <li><a href="/admin/users" class="hover:text-indigo-400">Users</a></li>
-            <li><a href="/admin/products" class="hover:text-indigo-400">Products</a></li>
             <li>
-                <form action="{{ route('logout') }}" method="POST">@csrf
-                    <button class="hover:text-red-400">Logout</button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                            class="text-white hover:text-indigo-300">
+                        Logout
+                    </button>
                 </form>
+
             </li>
         </ul>
     </div>

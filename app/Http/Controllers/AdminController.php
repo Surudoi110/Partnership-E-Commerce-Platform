@@ -10,8 +10,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         return view('admin.dashboard', [
-            'totalUsers' => User::count(),
-            'totalProducts' => Product::count(),
+            'totalUsers'    => User::count(),
         ]);
     }
 }
